@@ -12231,7 +12231,20 @@ function _initialLoad() {
             option.textContent = jsonData.data[i].name;
             breedSelect.appendChild(option);
           }
-        case 4:
+
+          //get response time
+          _axios.default.interceptors.request.use(function (req) {
+            req.metadata = req.metadata || {};
+            req.metadata.startTime = new Date().getTime();
+            return req;
+          });
+          _axios.default.interceptors.response.use(function (res) {
+            res.config.metadata.endTime = new Date().getTime();
+            res.durationInMS = res.config.metadata.endTime - res.config.metadata.startTime;
+            return res;
+          });
+          console.log("Request duration: ".concat(jsonData.durationInMS, " ms"));
+        case 7:
         case "end":
           return _context.stop();
       }

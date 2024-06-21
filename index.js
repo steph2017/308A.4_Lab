@@ -36,6 +36,23 @@ async function initialLoad() {
     option.textContent = jsonData.data[i].name;
     breedSelect.appendChild(option);
   }
+
+  //get response time
+  axios.interceptors.request.use(req => {
+    req.metadata = req.metadata || {};
+    req.metadata.startTime = new Date().getTime();
+    return req;
+  });
+
+  axios.interceptors.response.use(
+    (res) => {
+      res.config.metadata.endTime = new Date().getTime();
+      res.durationInMS = res.config.metadata.endTime - res.config.metadata.startTime;
+      return res;
+    });
+
+  console.log(`Request duration: ${jsonData.durationInMS} ms`);
+
 }
 
 initialLoad();
