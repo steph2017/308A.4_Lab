@@ -23,18 +23,17 @@ const API_KEY = "live_2E1Euws0XnCHf3juXXWaHTzaNaZaxjLTvTV2leoKBORf03fiHDvI8ZV7QF
  */
 
 async function initialLoad() {
-  const response = await fetch("https://api.thecatapi.com/v1/breeds", {
+  const jsonData = await axios.get("https://api.thecatapi.com/v1/breeds", {
     headers: {
       'x-api-key': API_KEY
     }
   });
-  const jsonData = await response.json(); // i think it returns an array of objects which have the desired properties .id and .name (data is read-only so i cant check my work with console.log)
 
   //attempt to add the breed names to the drop down
-  for (let i = 0; i < jsonData.length; i++) {
+  for (let i = 0; i < jsonData.data.length; i++) {
     const option = document.createElement("option");
-    option.setAttribute("value", jsonData[i].id);
-    option.textContent = jsonData[i].name;
+    option.setAttribute("value", jsonData.data[i].id);
+    option.textContent = jsonData.data[i].name;
     breedSelect.appendChild(option);
   }
 }
@@ -64,9 +63,16 @@ async function handleClick() {
   //   headers: {
   //     'x-api-key': API_KEY
   //   }
-  // });
-  const jsonData2 = await response2.json(); //this gives me a single breed object with the info i will turn over to infodump.
-  const infoArray = Object.entries(jsonData2);
+  // // });
+
+  // const jsonData2 = await response2.json(); //this gives me a single breed object with the info i will turn over to infodump.
+  const jsonData2 = await axios.get("https://api.thecatapi.com/v1/breeds/", {
+    headers: {
+      'x-api-key': API_KEY
+    }
+  });
+
+  const infoArray = Object.entries(jsonData2.data);
 
   for (const item of infoArray) {
     if (item[0] === "reference_image_id" || item[0] === "country_codes" || item[0] === "id" || item[0] === "weight") { //skips undesired fields 
@@ -85,10 +91,7 @@ async function handleClick() {
   }
 
 
-  // infoDump.textContent =
-  //   "Temprament: " + jsonData2.temprament + "\n" +
-  //   "Origin: " + jsonData2.origin + "\n" +
-  //   "Life Span: " + jsonData2.life_span + "\n" +
+
   // using a static url for now and a set limit of 20 to get multiple pics, later will figure out how to change breed id based on the click event 
   const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=20&breed_ids=" + breedSelect.value, {
     headers: {

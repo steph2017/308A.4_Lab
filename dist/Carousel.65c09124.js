@@ -12212,32 +12212,26 @@ function initialLoad() {
 }
 function _initialLoad() {
   _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var response, jsonData, i, option;
+    var jsonData, i, option;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return fetch("https://api.thecatapi.com/v1/breeds", {
+          return _axios.default.get("https://api.thecatapi.com/v1/breeds", {
             headers: {
               'x-api-key': API_KEY
             }
           });
         case 2:
-          response = _context.sent;
-          _context.next = 5;
-          return response.json();
-        case 5:
           jsonData = _context.sent;
-          // i think it returns an array of objects which have the desired properties .id and .name (data is read-only so i cant check my work with console.log)
-
           //attempt to add the breed names to the drop down
-          for (i = 0; i < jsonData.length; i++) {
+          for (i = 0; i < jsonData.data.length; i++) {
             option = document.createElement("option");
-            option.setAttribute("value", jsonData[i].id);
-            option.textContent = jsonData[i].name;
+            option.setAttribute("value", jsonData.data[i].id);
+            option.textContent = jsonData.data[i].name;
             breedSelect.appendChild(option);
           }
-        case 7:
+        case 4:
         case "end":
           return _context.stop();
       }
@@ -12322,11 +12316,14 @@ function _handleClick() {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.next = 2;
-          return response2.json();
+          return _axios.default.get("https://api.thecatapi.com/v1/breeds/", {
+            headers: {
+              'x-api-key': API_KEY
+            }
+          });
         case 2:
           jsonData2 = _context2.sent;
-          //this gives me a single breed object with the info i will turn over to infodump.
-          infoArray = Object.entries(jsonData2);
+          infoArray = Object.entries(jsonData2.data);
           _i = 0, _infoArray = infoArray;
         case 5:
           if (!(_i < _infoArray.length)) {
