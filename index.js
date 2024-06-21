@@ -60,11 +60,11 @@ getFavouritesBtn.addEventListener("click", handleClick);
 
 async function handleClick() {
   //info dump
-  const response2 = await fetch("https://api.thecatapi.com/v1/breeds/" + breedSelect.value, {
-    headers: {
-      'x-api-key': API_KEY
-    }
-  });
+  // const response2 = await fetch("https://api.thecatapi.com/v1/breeds/" + breedSelect.value, {
+  //   headers: {
+  //     'x-api-key': API_KEY
+  //   }
+  // });
   const jsonData2 = await response2.json(); //this gives me a single breed object with the info i will turn over to infodump.
   const infoArray = Object.entries(jsonData2);
 

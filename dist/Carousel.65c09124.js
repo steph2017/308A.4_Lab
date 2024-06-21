@@ -12317,37 +12317,29 @@ function handleClick() {
  */
 function _handleClick() {
   _handleClick = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var response2, jsonData2, infoArray, _i, _infoArray, item, row, col1, col2, response, jsonData;
+    var jsonData2, infoArray, _i, _infoArray, item, row, col1, col2, response, jsonData;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.next = 2;
-          return fetch("https://api.thecatapi.com/v1/breeds/" + breedSelect.value, {
-            headers: {
-              'x-api-key': API_KEY
-            }
-          });
-        case 2:
-          response2 = _context2.sent;
-          _context2.next = 5;
           return response2.json();
-        case 5:
+        case 2:
           jsonData2 = _context2.sent;
           //this gives me a single breed object with the info i will turn over to infodump.
           infoArray = Object.entries(jsonData2);
           _i = 0, _infoArray = infoArray;
-        case 8:
+        case 5:
           if (!(_i < _infoArray.length)) {
-            _context2.next = 23;
+            _context2.next = 20;
             break;
           }
           item = _infoArray[_i];
           if (!(item[0] === "reference_image_id" || item[0] === "country_codes" || item[0] === "id" || item[0] === "weight")) {
-            _context2.next = 12;
+            _context2.next = 9;
             break;
           }
-          return _context2.abrupt("continue", 20);
-        case 12:
+          return _context2.abrupt("continue", 17);
+        case 9:
           row = document.createElement("tr");
           col1 = document.createElement("td");
           col2 = document.createElement("td");
@@ -12356,22 +12348,22 @@ function _handleClick() {
           row.appendChild(col1);
           row.appendChild(col2);
           infoDump.appendChild(row);
-        case 20:
+        case 17:
           _i++;
-          _context2.next = 8;
+          _context2.next = 5;
           break;
-        case 23:
-          _context2.next = 25;
+        case 20:
+          _context2.next = 22;
           return fetch("https://api.thecatapi.com/v1/images/search?limit=20&breed_ids=" + breedSelect.value, {
             headers: {
               'x-api-key': API_KEY
             }
           });
-        case 25:
+        case 22:
           response = _context2.sent;
-          _context2.next = 28;
+          _context2.next = 25;
           return response.json();
-        case 28:
+        case 25:
           jsonData = _context2.sent;
           //this will give me an array of objects with properties like img url, etc. for each cat pic.
 
@@ -12387,7 +12379,7 @@ function _handleClick() {
             Carousel.appendCarousel(Carousel.createCarouselItem(imgsrc, imgalt, imgid));
           });
           Carousel.start();
-        case 32:
+        case 29:
         case "end":
           return _context2.stop();
       }
