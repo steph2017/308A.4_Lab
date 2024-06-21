@@ -12380,32 +12380,33 @@ function handleClick() {
  */
 function _handleClick() {
   _handleClick = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var jsonData2, infoArray, _i, _infoArray, item, row, col1, col2, response, jsonData;
+    var jsonData2, infoArray, _i, _infoArray, item, row, col1, col2, jsonData;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.next = 2;
-          return _axios.default.get("https://api.thecatapi.com/v1/breeds/", {
+          return _axios.default.get("https://api.thecatapi.com/v1/breeds/" + breedSelect.value, {
             headers: {
               'x-api-key': API_KEY
             }
           });
         case 2:
           jsonData2 = _context2.sent;
+          infoDump.innerHTML = "";
           infoArray = Object.entries(jsonData2.data);
           _i = 0, _infoArray = infoArray;
-        case 5:
+        case 6:
           if (!(_i < _infoArray.length)) {
-            _context2.next = 20;
+            _context2.next = 21;
             break;
           }
           item = _infoArray[_i];
           if (!(item[0] === "reference_image_id" || item[0] === "country_codes" || item[0] === "id" || item[0] === "weight")) {
-            _context2.next = 9;
+            _context2.next = 10;
             break;
           }
-          return _context2.abrupt("continue", 17);
-        case 9:
+          return _context2.abrupt("continue", 18);
+        case 10:
           row = document.createElement("tr");
           col1 = document.createElement("td");
           col2 = document.createElement("td");
@@ -12414,28 +12415,22 @@ function _handleClick() {
           row.appendChild(col1);
           row.appendChild(col2);
           infoDump.appendChild(row);
-        case 17:
+        case 18:
           _i++;
-          _context2.next = 5;
+          _context2.next = 6;
           break;
-        case 20:
-          _context2.next = 22;
-          return fetch("https://api.thecatapi.com/v1/images/search?limit=20&breed_ids=" + breedSelect.value, {
+        case 21:
+          _context2.next = 23;
+          return _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=20&breed_ids=" + breedSelect.value, {
             headers: {
               'x-api-key': API_KEY
             }
           });
-        case 22:
-          response = _context2.sent;
-          _context2.next = 25;
-          return response.json();
-        case 25:
+        case 23:
           jsonData = _context2.sent;
-          //this will give me an array of objects with properties like img url, etc. for each cat pic.
-
           //loop for new carousel
           Carousel.clear();
-          jsonData.forEach(function (x) {
+          jsonData.data.forEach(function (x) {
             //extract needed variables
             var imgsrc = x.url;
             var imgalt = "cute cat image";
@@ -12445,7 +12440,7 @@ function _handleClick() {
             Carousel.appendCarousel(Carousel.createCarouselItem(imgsrc, imgalt, imgid));
           });
           Carousel.start();
-        case 29:
+        case 27:
         case "end":
           return _context2.stop();
       }
