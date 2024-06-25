@@ -41,6 +41,7 @@ async function initialLoad() {
   axios.interceptors.request.use(req => {
     req.metadata = req.metadata || {};
     req.metadata.startTime = new Date().getTime();
+    progressBar.style.width = "0%";
     return req;
   });
 
@@ -53,6 +54,14 @@ async function initialLoad() {
 
   console.log(`Request duration: ${jsonData.durationInMS} ms`);
 
+  //progresbar function
+  function updateProgress(ev) {
+    if (ev.lengthComputable) {
+      const percentComplete = Math.ceil((ev.loaded * 100) / ev.total);
+      progressBar.style.width = percentComplete + "%";
+
+    }
+  }
 }
 
 initialLoad();
@@ -111,11 +120,11 @@ async function handleClick() {
 
   //loop for new carousel
   Carousel.clear();
-  jsonData.data.forEach((x) => {
+  jsonData.data.forEach((cat) => {
     //extract needed variables
-    const imgsrc = x.url;
+    const imgsrc = cat.url;
     const imgalt = "cute cat image";
-    const imgid = x.id;
+    const imgid = cat.id;
 
     //feed variables into external functions
     Carousel.appendCarousel(Carousel.createCarouselItem(imgsrc, imgalt, imgid));

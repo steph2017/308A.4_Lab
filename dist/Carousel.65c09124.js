@@ -12212,17 +12212,23 @@ function initialLoad() {
 }
 function _initialLoad() {
   _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var jsonData, i, option;
+    var jsonData, i, option, updateProgress;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.next = 2;
+          updateProgress = function _updateProgress(ev) {
+            if (ev.lengthComputable) {
+              var percentComplete = Math.ceil(ev.loaded * 100 / ev.total);
+              progressBar.style.width = percentComplete + "%";
+            }
+          };
+          _context.next = 3;
           return _axios.default.get("https://api.thecatapi.com/v1/breeds", {
             headers: {
               'x-api-key': API_KEY
             }
           });
-        case 2:
+        case 3:
           jsonData = _context.sent;
           //attempt to add the breed names to the drop down
           for (i = 0; i < jsonData.data.length; i++) {
@@ -12236,6 +12242,7 @@ function _initialLoad() {
           _axios.default.interceptors.request.use(function (req) {
             req.metadata = req.metadata || {};
             req.metadata.startTime = new Date().getTime();
+            progressBar.style.width = "0%";
             return req;
           });
           _axios.default.interceptors.response.use(function (res) {
@@ -12244,7 +12251,9 @@ function _initialLoad() {
             return res;
           });
           console.log("Request duration: ".concat(jsonData.durationInMS, " ms"));
-        case 7:
+
+          //progresbar function
+        case 8:
         case "end":
           return _context.stop();
       }
@@ -12374,11 +12383,11 @@ function _handleClick() {
           jsonData = _context2.sent;
           //loop for new carousel
           Carousel.clear();
-          jsonData.data.forEach(function (x) {
+          jsonData.data.forEach(function (cat) {
             //extract needed variables
-            var imgsrc = x.url;
+            var imgsrc = cat.url;
             var imgalt = "cute cat image";
-            var imgid = x.id;
+            var imgid = cat.id;
 
             //feed variables into external functions
             Carousel.appendCarousel(Carousel.createCarouselItem(imgsrc, imgalt, imgid));
