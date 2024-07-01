@@ -23,6 +23,7 @@ The main branch can be viewed via live site. However, to view the axios branch y
 
 ##### Delete files
 These files are important for the live site but not needed for the local installation.
+
 `rm -r .htmlnanorc dist node_modules`
 
 ##### Run the project
