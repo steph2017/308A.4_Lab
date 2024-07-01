@@ -10,7 +10,7 @@ This project is a webpage powered by Javascript that consumes the [Met API](http
   
 ## Live Site
 I deployed the main branch via Netlify.
-[[https://main--tubular-ganache-6c2c23.netlify.app/](https://main--tubular-ganache-6c2c23.netlify.app/)](https://stupendous-scone-024eb9.netlify.app/)
+[https://main--tubular-ganache-6c2c23.netlify.app/](https://stupendous-scone-024eb9.netlify.app/)
 
 ## Installation
 The main branch can be viewed via live site. However, to view the axios branch you will need to follow the instructions below.
@@ -23,6 +23,7 @@ The main branch can be viewed via live site. However, to view the axios branch y
 
 ##### Delete files
 These files are important for the live site but not needed for the local installation.
+
 `rm -r .htmlnanorc dist`
 
 ##### Run the project
